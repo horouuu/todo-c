@@ -132,3 +132,74 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
     free(todo_string);
     return 0;
 }
+
+int todo_delete(const char *file_name, const char *id)
+{
+    FILE *fptr;
+    char buff[106];
+    char id_buff[12];
+    char *buff_ptr = buff;
+    char *id_buff_ptr = id_buff;
+    int found = 0;
+    char deleted;
+
+    fptr = fopen(file_name, "r+");
+    if (!fptr)
+    {
+        printf("Error deleting todo: file not found.");
+        return 1;
+    }
+
+    if (fgets(buff, 14, fptr) == NULL)
+    {
+        printf("Error: corrupted or empty file.");
+        return 1;
+    }
+
+    while (fgets(buff, 106, fptr))
+    {
+        id_buff_ptr = id_buff;
+        buff_ptr = buff;
+        while (*buff_ptr != ',' && *buff_ptr != '\n')
+        {
+            *id_buff_ptr = *buff_ptr;
+            buff_ptr++;
+            id_buff_ptr++;
+        }
+        *id_buff_ptr = '\0';
+        if (strcmp(id_buff, id) == 0)
+        {
+            printf("Found matching id %s\n", id);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        printf("No todos with the id %s was found.", id);
+        return 0;
+    }
+
+    fseek(fptr, -3, SEEK_CUR);
+    deleted = (char)fgetc(fptr);
+    fseek(fptr, -1, SEEK_CUR);
+
+    if (deleted == '1')
+    {
+        printf("Entry with id %s already marked for deletion.", id);
+    }
+    else if (deleted == '0')
+    {
+        fputc((int)'1', fptr);
+        printf("Successfully marked entry with id %s for deletion.", id);
+    }
+    else
+    {
+        printf("Error: Invalid value for deletion status.");
+        return 1;
+    }
+
+    fclose(fptr);
+    return 0;
+}

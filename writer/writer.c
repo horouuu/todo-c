@@ -67,7 +67,7 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
     int ctstatus;
     int cfstatus;
     char *todo_string;
-    char *fgets_result;
+    char *fgstatus;
 
     fptr = fopen(file_name, "r+");
     if (!fptr)
@@ -81,8 +81,8 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
         }
     }
 
-    fgets_result = fgets(curr_id_raw, sizeof(curr_id_raw), fptr);
-    if (!fgets_result)
+    fgstatus = fgets(curr_id_raw, sizeof(curr_id_raw), fptr);
+    if (!fgstatus)
     {
         strcpy(curr_id_raw, "1");
     }

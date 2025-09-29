@@ -142,6 +142,7 @@ int todo_delete(const char *file_name, const char *id)
     char *id_buff_ptr = id_buff;
     int found = 0;
     char deleted;
+    int status_buff;
 
     fptr = fopen(file_name, "r+");
     if (!fptr)
@@ -153,6 +154,7 @@ int todo_delete(const char *file_name, const char *id)
     if (fgets(buff, 14, fptr) == NULL)
     {
         printf("Error: corrupted or empty file.");
+        fclose(fptr);
         return 1;
     }
 
@@ -181,9 +183,27 @@ int todo_delete(const char *file_name, const char *id)
         return 0;
     }
 
-    fseek(fptr, -3, SEEK_CUR);
+    status_buff = fseek(fptr, -3, SEEK_CUR);
+    if (status_buff != 0)
+    {
+        printf(stderr, "Something went wrong: fseek(fptr, -3, SEEK_CUR)");
+        fclose(fptr);
+        return 1;
+    }
     deleted = (char)fgetc(fptr);
-    fseek(fptr, -1, SEEK_CUR);
+    if (deleted == EOF)
+    {
+        printf(stderr, "fgetc returned invalid value or no characters are present to be read.");
+        fclose(fptr);
+        return 1;
+    }
+    status_buff = fseek(fptr, -1, SEEK_CUR);
+    if (status_buff != 0)
+    {
+        printf(stderr, "Something went wrong: fseek(fptr, -3, SEEK_CUR)");
+        fclose(fptr);
+        return 1;
+    }
 
     if (deleted == '1')
     {

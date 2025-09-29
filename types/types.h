@@ -4,7 +4,7 @@
 
 typedef struct {
     time_t timestamp;
-    char* content;
+    char content[60];
     unsigned int priority;
     unsigned int id;
 } Todo;

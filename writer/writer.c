@@ -83,7 +83,7 @@ int todo_add(const char *file_name, const char *todo_message, const unsigned int
     }
     else if (ctstatus == -1)
     {
-        printf("Error: todo message too long. Maximum: 60 characters.");
+        printf("Error: todo message too long. Maximum: 60 characters.\n");
         return 1;
     }
     else

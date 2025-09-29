@@ -17,17 +17,16 @@ void todo_create_directory()
 #endif
 }
 
-int todo_create_file(const char *file_name, FILE *fptr)
+int todo_create_file(const char *file_name, FILE **fptr)
 {
-    fptr = fopen(file_name, "w+");
-    if (!fptr)
+    *fptr = fopen(file_name, "w+");
+    if (!*fptr)
     {
         return 1;
     }
-    fprintf(fptr, "%-12u\n", 1);
-    fflush(fptr);
-    rewind(fptr);
-    printf("\n");
+    fprintf(*fptr, "%-12u\n", 1);
+    fflush(*fptr);
+    rewind(*fptr);
 
     return 0;
 }
@@ -74,7 +73,7 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
     if (!fptr)
     {
         todo_create_directory();
-        cfstatus = todo_create_file(file_name, fptr);
+        cfstatus = todo_create_file(file_name, &fptr);
         if (cfstatus != 0)
         {
             printf("Error creating file.");
@@ -85,6 +84,7 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
     fgstatus = fgets(curr_id_raw, sizeof(curr_id_raw), fptr);
     if (!fgstatus)
     {
+        printf("Failed to find id. Defaulting to 1.\n");
         strcpy(curr_id_raw, "1");
     }
 

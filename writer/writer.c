@@ -216,7 +216,7 @@ int todo_delete(const char *file_name, const char *id)
     }
     else
     {
-        printf("Error: Invalid value for deletion status.\n");
+        fprintf(stderr, "Invalid value for deletion status.\n");
         return 1;
     }
 

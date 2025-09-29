@@ -60,8 +60,9 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
 {
     FILE *fptr;
     time_t timestamp;
-    char *curr_id_raw = malloc(13);
-    char *curr_id = malloc(12);
+    char curr_id_raw[13];
+    char *curr_id_raw_ptr = curr_id_raw;
+    char curr_id[12];
     char *curr_id_ptr = curr_id;
     unsigned int curr_available_id;
     int ctstatus;
@@ -88,11 +89,11 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
     }
 
     time(&timestamp);
-    while (!isspace(*curr_id_raw) && *curr_id_raw != '\0')
+    while (!isspace(*curr_id_raw_ptr) && *curr_id_raw_ptr != '\0')
     {
-        *curr_id = *curr_id_raw;
+        *curr_id_ptr = *curr_id_raw_ptr;
         curr_id_ptr++;
-        curr_id_raw++;
+        curr_id_raw_ptr++;
     }
     *curr_id_ptr = '\0';
 

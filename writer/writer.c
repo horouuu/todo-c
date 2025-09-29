@@ -36,9 +36,8 @@ int todo_add(const char *file_name, const char *todo_message, const unsigned int
 {
     FILE *fptr;
     time_t timestamp;
-    char curr_id_raw[5];
+    char curr_id_raw[12];
     unsigned int curr_available_id;
-    int curr_pos;
     int ctstatus;
     char *todo_string;
     char *fgets_result;

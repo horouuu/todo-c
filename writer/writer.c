@@ -7,13 +7,14 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <ctype.h>
+#include "../reader/reader.h"
 
-void todo_create_directory()
+void todo_create_directory(char *dir_name)
 {
 #ifdef _WIN32
-    _mkdir(".todo");
+    _mkdir(dir_name);
 #else
-    mkdir(".todo", 0755);
+    mkdir(dir_name, 0755);
 #endif
 }
 
@@ -72,7 +73,7 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
     fptr = fopen(file_name, "r+");
     if (!fptr)
     {
-        todo_create_directory();
+        todo_create_directory(".todo");
         cfstatus = todo_create_file(file_name, &fptr);
         if (cfstatus != 0)
         {

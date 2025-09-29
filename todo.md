@@ -17,5 +17,5 @@
 1. todo groupings
 
 # storage
-reference_id-timestamp-"message"-priority-done_state\n
-size: 12 + 20 + 60 + 12 + 1 = 105 bytes
+reference_id-timestamp-"message"-priority-done_state-erased\n
+size: 12 + 20 + 60 + 12 + 1 + 1 = 106 bytes

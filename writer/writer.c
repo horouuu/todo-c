@@ -44,7 +44,7 @@ int todo_create(const char *todo_message, const char *priority, const char *id, 
 
     sprintf(timestamp_string, "%" PRIdMAX, (intmax_t)timestamp);
 
-    out_size = strlen(timestamp_string) + strlen(todo_message) + strlen(priority) + strlen(id) + 4 + 1 + 1;
+    out_size = strlen(timestamp_string) + strlen(todo_message) + strlen(priority) + strlen(id) + 5 + 1 + 1 + 1;
     *out = malloc(out_size);
 
     if (!*out)
@@ -52,7 +52,7 @@ int todo_create(const char *todo_message, const char *priority, const char *id, 
         return 1;
     }
 
-    sprintf(*out, "%s,%s,\"%s\",%s,0", id, timestamp_string, todo_message, priority);
+    sprintf(*out, "%s,%s,\"%s\",%s,0,0", id, timestamp_string, todo_message, priority);
     return 0;
 }
 

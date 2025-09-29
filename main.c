@@ -1,9 +1,23 @@
 #include <stdio.h>
+#include <string.h>
 #include "./writer/writer.h"
 #include "./reader/reader.h"
 
-int main()
+int main(int argc, char **argsv)
 {
-    todo_add(".todo/test.txt", "refactor code", 99);
+    if (argc == 1)
+    {
+        return 0;
+    }
+
+    if (strcmp(argsv[1], "a") == 0)
+    {
+        todo_add(".todo/test.txt", "hi!!!!", "1");
+    }
+    else
+    {
+        todo_delete(".todo/test.txt", "10");
+    }
+
     return 0;
 }

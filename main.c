@@ -3,6 +3,8 @@
 #include "./writer/writer.h"
 #include "./reader/reader.h"
 
+char *FILE_NAME = ".todo/test.txt";
+
 int main(int argc, char **argsv)
 {
     if (argc == 1)
@@ -12,11 +14,15 @@ int main(int argc, char **argsv)
 
     if (strcmp(argsv[1], "a") == 0)
     {
-        todo_add(".todo/test.txt", "hi!!!!", "1");
+        todo_add(FILE_NAME, "hi!!!!", "1");
     }
-    else
+    else if (strcmp(argsv[1], "b") == 0)
     {
-        todo_delete(".todo/test.txt", "10");
+        todo_delete(FILE_NAME, "10");
+    }
+    else if (strcmp(argsv[1], "c") == 0)
+    {
+        todo_display_all(FILE_NAME, DEFAULT);
     }
 
     return 0;

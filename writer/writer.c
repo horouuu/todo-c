@@ -121,7 +121,7 @@ int todo_add(const char *file_name, const char *todo_message, const char *priori
 
     curr_available_id += 1;
     rewind(fptr);
-    fprintf(fptr, "%u\n", curr_available_id);
+    fprintf(fptr, "%-12u\n", curr_available_id);
 
     fseek(fptr, 0, SEEK_END);
     fprintf(fptr, "%s\n", todo_string);

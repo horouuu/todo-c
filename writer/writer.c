@@ -147,13 +147,13 @@ int todo_delete(const char *file_name, const char *id)
     fptr = fopen(file_name, "r+");
     if (!fptr)
     {
-        printf("Error deleting todo: file not found.");
+        fprintf(stderr, "Error deleting todo: file not found.\n");
         return 1;
     }
 
     if (fgets(buff, 14, fptr) == NULL)
     {
-        printf("Error: corrupted or empty file.");
+        fprintf(stderr, "Corrupted or empty file.\n");
         fclose(fptr);
         return 1;
     }
@@ -179,44 +179,44 @@ int todo_delete(const char *file_name, const char *id)
 
     if (!found)
     {
-        printf("No todos with the id %s was found.", id);
+        printf("No todos with the id %s was found.\n", id);
         return 0;
     }
 
     status_buff = fseek(fptr, -3, SEEK_CUR);
     if (status_buff != 0)
     {
-        printf(stderr, "Something went wrong: fseek(fptr, -3, SEEK_CUR)");
+        fprintf(stderr, "Something went wrong: fseek(fptr, -3, SEEK_CUR)\n");
         fclose(fptr);
         return 1;
     }
     deleted = (char)fgetc(fptr);
     if (deleted == EOF)
     {
-        printf(stderr, "fgetc returned invalid value or no characters are present to be read.");
+        fprintf(stderr, "fgetc returned invalid value or no characters are present to be read.\n");
         fclose(fptr);
         return 1;
     }
     status_buff = fseek(fptr, -1, SEEK_CUR);
     if (status_buff != 0)
     {
-        printf(stderr, "Something went wrong: fseek(fptr, -3, SEEK_CUR)");
+        fprintf(stderr, "Something went wrong: fseek(fptr, -3, SEEK_CUR)\n");
         fclose(fptr);
         return 1;
     }
 
     if (deleted == '1')
     {
-        printf("Entry with id %s already marked for deletion.", id);
+        printf("Entry with id %s already marked for deletion.\n", id);
     }
     else if (deleted == '0')
     {
         fputc((int)'1', fptr);
-        printf("Successfully marked entry with id %s for deletion.", id);
+        printf("Successfully marked entry with id %s for deletion.\n", id);
     }
     else
     {
-        printf("Error: Invalid value for deletion status.");
+        printf("Error: Invalid value for deletion status.\n");
         return 1;
     }
 
